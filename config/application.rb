@@ -14,6 +14,10 @@ module MissionManagerDemo
     config.generators.assets = false
     config.generators.helper = false
 
+    config.generators do |g|
+      g.factory_bot false
+    end
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
