@@ -4,7 +4,7 @@ class MissionsController < ApplicationController
   end
 
   def new
-    
+    @mission = Mission.new
   end
 
   def create
@@ -16,7 +16,7 @@ class MissionsController < ApplicationController
   end
 
   def show
-    
+    @mission = Mission.find(params[:id])
   end
 
   def update
