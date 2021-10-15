@@ -1,2 +1,36 @@
-<h1 class="text-primary">Missions List</h1>
-
+<div class="container">
+  <h1 class="text-center text-dark">Missions List</h1>
+  <div class="row justify-content-end">
+    <div class="col-3">
+      <%= link_to "Add New Mission", new_mission_path, class: "btn btn-primary" %>
+    </div>
+  </div>
+  
+  <div class="row">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Title</th>
+          <th scope="col">Description</th>
+          <th scope="col">Start</th>
+          <th scope="col">Finish</th>
+          <th scope="col">Operate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @missions.each do |mission| %>
+        <tr>
+          <td><%= mission.title %></td>
+          <td><%= mission.description %></td>
+          <td><%= mission.start_at.strftime("%Y-%m-%d") %></td>
+          <td><%= mission.finish_at.strftime("%Y-%m-%d") %></td>
+          <td>
+            <%= link_to "Edit", edit_mission_path(mission), class: "btn btn-xs" %>
+            <%= link_to "Delete", mission_path(mission), class: "btn btn-xs", method: "delete", data: { confirm: "Are you sure?" } %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
