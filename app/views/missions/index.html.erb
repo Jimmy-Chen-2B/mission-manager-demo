@@ -20,8 +20,8 @@
       <tbody>
         <% @missions.each do |mission| %>
         <tr>
-          <td><%= mission.title %></td>
-          <td><%= mission.description %></td>
+          <td><%= link_to "#{mission.title}", mission_path(mission)%></td>
+          <td><%= link_to "#{mission.description}", mission_path(mission)%></td>
           <td><%= mission.start_at.strftime("%Y-%m-%d") %></td>
           <td><%= mission.finish_at.strftime("%Y-%m-%d") %></td>
           <td>
