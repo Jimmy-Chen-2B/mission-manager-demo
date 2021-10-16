@@ -1,19 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe MissionsController do
-  describe "GET /index" do
+  describe "GET index" do
     it "assigns @missions and render" do
-      mission1 = FactoryBot.create(:mission)
-      mission2 = FactoryBot.create(:mission)
+      mission1 = create(:mission)
+      mission2 = create(:mission)
 
       get :index
 
-      expect(assigns[:missions]).to eq([mission1, mission2]) 
+      expect(assigns[:missions]).to eq([mission2, mission1]) 
     end
 
     it "render template" do
-      mission1 = FactoryBot.create(:mission)
-      mission2 = FactoryBot.create(:mission)
+      mission1 = create(:mission)
+      mission2 = create(:mission)
 
       get :index
 
@@ -23,7 +23,7 @@ RSpec.describe MissionsController do
 
   describe "GET show" do
     it "assigns @mission" do
-    mission = FactoryBot.create(:mission)
+    mission = create(:mission)
 
     get :show, params: { id: mission.id }
 
@@ -31,7 +31,7 @@ RSpec.describe MissionsController do
     end
 
     it "render template" do
-      mission = FactoryBot.create(:mission)
+      mission = create(:mission)
   
       get :show, params: { id: mission.id }
   
@@ -41,7 +41,7 @@ RSpec.describe MissionsController do
 
   describe "GET new" do
     it "assigns @mission" do
-      mission = FactoryBot.build(:mission)
+      mission = build(:mission)
 
       get :new
 
@@ -49,11 +49,46 @@ RSpec.describe MissionsController do
     end
 
     it "render template" do
-      mission = FactoryBot.build(:mission)
+      mission = build(:mission)
   
       get :new
   
       expect(response).to render_template("new")
     end
+  end
+
+  describe "POSt create" do
+    it "create a new mission record" do
+      mission = build(:mission)
+
+      expect do
+        post :create, params: { mission: attributes_for(:mission) }
+      end. to change{ Mission.count }.by(1)
+    end
+
+    it "redirect to missions_path" do
+      mission = build(:mission)
+
+      post :create, params: { mission: attributes_for(:mission) }
+  
+      expect(response).to redirect_to missions_path
+    end
+
+    it "doesn't create a record when mission dosen't have a title, start time or finish time" do
+      mission = build(:mission)
+
+      expect do
+        post :create, params: { mission: { description: "foobar" } }
+      end. to change{ Mission.count }.by(0)
+    end
+
+    it "create a new mission record" do
+      mission = build(:mission)
+
+      post :create, params: { mission: { description: "foobar" } }
+
+      expect(response).to render_template("new")
+    end
+
   end
 end
