@@ -90,5 +90,15 @@ RSpec.describe MissionsController do
       expect(response).to render_template("new")
     end
 
+    expect(assigns[:mission]).to eq(mission)
+    end
+
+    it "assigns @course" do
+      mission =  FactoryBot.create(:mission)
+  
+      get :show, params: { id: mission.id }
+  
+      expect(response).to render_template("show")
+    end
   end
 end
