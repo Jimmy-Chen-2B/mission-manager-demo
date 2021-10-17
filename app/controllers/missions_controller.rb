@@ -10,6 +10,7 @@ class MissionsController < ApplicationController
 
   def create
     @mission = Mission.new(mission_params)
+    
     if @mission.save
       redirect_to missions_path
     else
@@ -26,7 +27,13 @@ class MissionsController < ApplicationController
   end
 
   def update
-    
+    @mission = Mission.find(params[:id])
+
+    if @mission.update(mission_params)
+      redirect_to mission_path(@mission)
+    else  
+      render :edit  
+    end
   end
 
   def destroy

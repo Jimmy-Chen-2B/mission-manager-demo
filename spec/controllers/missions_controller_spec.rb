@@ -111,6 +111,53 @@ RSpec.describe MissionsController do
 
       expect(response).to render_template("edit")
     end
-  end  
+  end
+  
+  describe "PUT update" do
+    context "when mission has required data" do
+      it "assign @mission" do
+        mission = create(:mission)
+  
+        put :update, params: { id: mission.id, mission: { title: "This is a book", description: "The book that has magic power", start_at: "2021-10-17", finish_at: "2021-10-20" } }
+  
+        expect(assigns[:mission]).to eq(mission) 
+      end
+  
+      it "change value" do
+        mission = create(:mission)
+  
+        put :update, params: { id: mission.id, mission: { title: "This is a book", description: "The book that has magic power", start_at: "2021-10-17", finish_at: "2021-10-20" } }
+  
+        expect(assigns[:mission].title).to eq("This is a book")
+        expect(assigns[:mission].description).to eq("The book that has magic power")
+      end
+  
+      it "redirects to mission_path" do
+        mission = create(:mission)
+  
+        put :update, params: { id: mission.id, mission: { title: "This is a book", description: "The book that has magic power", start_at: "2021-10-17", finish_at: "2021-10-20" } }
+  
+        expect(response).to redirect_to mission_path(mission)
+      end  
+    end
+    
+    context "when mission dosen't have required data" do
+      it "don't create a record" do
+        mission = create(:mission)
+  
+        put :update, params: { id: mission.id, mission: { title: "", description: "The book that has magic power", start_at: "", finish_at: "" } }
+  
+        expect(mission.description).not_to eq("The book that has magic power")
+      end
+
+      it "render edit template" do
+        mission = create(:mission)
+  
+        put :update, params: { id: mission.id, mission: { title: "", description: "The book that has magic power", start_at: "", finish_at: "" } }
+  
+        expect(response).to render_template("edit")
+      end
+    end
+  end
 end
 
