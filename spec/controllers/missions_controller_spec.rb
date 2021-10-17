@@ -58,36 +58,59 @@ RSpec.describe MissionsController do
   end
 
   describe "POSt create" do
-    it "create a new mission record" do
-      mission = build(:mission)
-
-      expect do
-        post :create, params: { mission: attributes_for(:mission) }
-      end. to change{ Mission.count }.by(1)
-    end
-
-    it "redirect to missions_path" do
-      mission = build(:mission)
-
-      post :create, params: { mission: attributes_for(:mission) }
+    context "when mission has a title, start time and finish time" do
+      it "create a new mission record" do
+        mission = build(:mission)
   
-      expect(response).to redirect_to missions_path
+        expect do
+          post :create, params: { mission: attributes_for(:mission) }
+        end. to change{ Mission.count }.by(1)
+      end
+  
+      it "redirect to missions_path" do
+        mission = build(:mission)
+  
+        post :create, params: { mission: attributes_for(:mission) }
+    
+        expect(response).to redirect_to missions_path
+      end      
     end
 
-    it "doesn't create a record when mission dosen't have a title, start time or finish time" do
-      mission = build(:mission)
-
-      expect do
+    context "when mission dosen't have a title, start time or finish time" do
+      it "doesn't create a record" do
+        mission = build(:mission)
+  
+        expect do
+          post :create, params: { mission: { description: "foobar" } }
+        end. to change{ Mission.count }.by(0)
+      end
+  
+      it "render new template" do
+        mission = build(:mission)
+  
         post :create, params: { mission: { description: "foobar" } }
-      end. to change{ Mission.count }.by(0)
-    end
-
-    it "create a new mission record" do
-      mission = build(:mission)
-
-      post :create, params: { mission: { description: "foobar" } }
-
-      expect(response).to render_template("new")
+  
+        expect(response).to render_template("new")
+      end
     end
   end
+
+  describe "GET edit" do
+    it "assign @mission" do
+      mission = create(:mission)
+
+      get :edit, params: { id: mission.id }
+
+      expect(assigns[:mission]).to eq(mission) 
+    end
+
+    it "render edit template" do
+      mission = create(:mission)
+
+      get :edit, params: { id: mission.id }
+
+      expect(response).to render_template("edit")
+    end
+  end  
 end
+

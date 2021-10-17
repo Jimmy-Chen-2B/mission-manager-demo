@@ -18,7 +18,7 @@ class MissionsController < ApplicationController
   end
 
   def edit
-    
+    @mission = Mission.find(params[:id])
   end
 
   def show
