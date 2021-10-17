@@ -159,5 +159,29 @@ RSpec.describe MissionsController do
       end
     end
   end
+
+  describe "DELETE destroy" do
+    it "assign @mission" do
+      mission = create(:mission)
+      
+      delete :destroy, params: { id: mission.id }
+      
+      expect(assigns[:mission]).to eq(mission) 
+    end
+
+    it "deletes a record" do
+      mission = create(:mission)
+      
+      expect{ delete :destroy, params: { id: mission.id } }.to change { Mission.count }.by(-1)
+    end
+
+    it "redirects to missions_path" do
+      mission = create(:mission)
+
+      delete :destroy, params: { id: mission.id }
+
+      expect(response).to redirect_to missions_path
+    end
+  end
 end
 
