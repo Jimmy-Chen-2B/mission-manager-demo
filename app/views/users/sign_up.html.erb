@@ -1,0 +1,33 @@
+<h1>Sign up</h1>
+
+<% if @user.errors.any? %>
+  <ul>
+    <% @user.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<div class="row justify-content-center">
+  <div class="col-6">
+    <%= form_for(@user, url: "/users") do |f| %>       
+      <div class="mb-3">
+        <%= f.label :email, "E-mail", class: "form-lable" %>
+        <%= f.text_field :email, class: "form-control" %>
+      </div>
+      <div class="mb-3">
+        <%= f.label :username, "Username", class: "form-lable" %>
+        <%= f.text_field :username, class: "form-control" %>
+      </div>
+      <div class="mb-3">
+        <%= f.label :password, "Password", class: "form-lable" %>
+        <%= f.text_field :password, class: "form-control" %>
+      </div>
+      <div class="mb-3">
+        <%= f.label :password_confirmation, "Password confirmation", class: "form-lable" %>
+        <%= f.text_field :password_confirmation, class: "form-control" %>
+      </div>
+      <%= f.submit "Submit", disable_with: "Submiting...", class: "btn btn-primary"%>
+    <% end %>
+  </div>
+</div>

@@ -1,8 +1,9 @@
 class MissionsController < ApplicationController
   before_action :set_mission, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user! 
   
   def index
-    @missions = Mission.all.order(id: :desc)
+    @missions = current_user.missions.order(id: :desc)
   end
 
   def new
@@ -45,6 +46,6 @@ class MissionsController < ApplicationController
   end
 
   def set_mission
-    @mission = Mission.find(params[:id])
+    @mission = current_user.mission.find(params[:id])
   end
 end
