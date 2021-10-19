@@ -1,13 +1,11 @@
-<div class="container">
-  <div class="row text-center">
-    <h1>Edit Mission</h1>
-  </div>
-
-  <div class="row justify-content-end">
-    <div class="col-3">
-      <%= link_to "Back To List", missions_path, class: "btn btn-primary" %>
-    </div>
-  </div>
-
-  <%= render "form", mission: @mission %>
+<div class="row text-center">
+  <h1>Edit Mission</h1>
 </div>
+
+<div class="row justify-content-end">
+  <div class="col-3">
+    <%= link_to "Back To List", missions_path, class: "btn btn-primary" %>
+  </div>
+</div>
+
+<%= render "form", mission: @mission %>
