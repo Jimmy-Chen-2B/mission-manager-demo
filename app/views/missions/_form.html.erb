@@ -10,12 +10,12 @@
         <%= f.text_area :description, class: "form-control" %>
       </div>
       <div class="mb-3">
-        <%= f.label :start_at, 'Start time', class: "form-lable" %>
-        <%= f.datetime_field :start_at, class: "form-control" %>
+        <%= f.label :started_at, 'Start time', class: "form-lable" %>
+        <%= f.datetime_field :started_at, class: "form-control" %>
       </div>
       <div class="mb-3">
-        <%= f.label :finish_at, 'Finish time', class: "form-lable" %>
-        <%= f.datetime_field :finish_at, class: "form-control" %>
+        <%= f.label :finished_at, 'Finish time', class: "form-lable" %>
+        <%= f.datetime_field :finished_at, class: "form-control" %>
       </div>
       <%= f.submit "Submit", disable_with: 'Submiting...', class: "btn btn-primary"%>
     <% end %>

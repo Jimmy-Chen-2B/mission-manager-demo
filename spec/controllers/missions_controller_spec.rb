@@ -68,6 +68,9 @@ RSpec.describe MissionsController do
   end
 
   describe "POST create" do
+    let(:user) { create(:user) }
+    before { login(user) }
+
     context "when mission has a title, start time and finish time" do
       it "create a new mission record" do
         mission = build(:mission)
@@ -128,7 +131,7 @@ RSpec.describe MissionsController do
       it "assign @mission" do
         mission = create(:mission)
   
-        put :update, params: { id: mission.id, mission: { title: "This is a book", description: "The book that has magic power", start_at: "2021-10-17", finish_at: "2021-10-20" } }
+        put :update, params: { id: mission.id, mission: { title: "This is a book", description: "The book that has magic power", started_at: "2021-10-17", finished_at: "2021-10-20" } }
   
         expect(assigns[:mission]).to eq(mission) 
       end
@@ -136,7 +139,7 @@ RSpec.describe MissionsController do
       it "change value" do
         mission = create(:mission)
   
-        put :update, params: { id: mission.id, mission: { title: "This is a book", description: "The book that has magic power", start_at: "2021-10-17", finish_at: "2021-10-20" } }
+        put :update, params: { id: mission.id, mission: { title: "This is a book", description: "The book that has magic power", started_at: "2021-10-17", finished_at: "2021-10-20" } }
   
         expect(assigns[:mission].title).to eq("This is a book")
         expect(assigns[:mission].description).to eq("The book that has magic power")
@@ -145,7 +148,7 @@ RSpec.describe MissionsController do
       it "redirects to mission_path" do
         mission = create(:mission)
   
-        put :update, params: { id: mission.id, mission: { title: "This is a book", description: "The book that has magic power", start_at: "2021-10-17", finish_at: "2021-10-20" } }
+        put :update, params: { id: mission.id, mission: { title: "This is a book", description: "The book that has magic power", started_at: "2021-10-17", finished_at: "2021-10-20" } }
   
         expect(response).to redirect_to mission_path(mission)
       end  
@@ -155,7 +158,7 @@ RSpec.describe MissionsController do
       it "don't create a record" do
         mission = create(:mission)
   
-        put :update, params: { id: mission.id, mission: { title: "", description: "The book that has magic power", start_at: "", finish_at: "" } }
+        put :update, params: { id: mission.id, mission: { title: "", description: "The book that has magic power", started_at: "", finished_at: "" } }
   
         expect(mission.description).not_to eq("The book that has magic power")
       end
@@ -163,7 +166,7 @@ RSpec.describe MissionsController do
       it "render edit template" do
         mission = create(:mission)
   
-        put :update, params: { id: mission.id, mission: { title: "", description: "The book that has magic power", start_at: "", finish_at: "" } }
+        put :update, params: { id: mission.id, mission: { title: "", description: "The book that has magic power", started_at: "", finished_at: "" } }
   
         expect(response).to render_template("edit")
       end
