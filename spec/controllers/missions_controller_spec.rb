@@ -40,24 +40,34 @@ RSpec.describe MissionsController do
   end
 
   describe "GET new" do
-    it "assigns @mission" do
-      mission = build(:mission)
+    context "when a user login" do
+      let(:user) { create(:user) }
+      let(:mission) { build(:mission) }
 
-      get :new
+      before do
+        login(user)
+        get :new
+      end
 
-      expect(assigns[:mission]).to be_a_new(Mission)
+      it "assigns @mission" do
+        expect(assigns[:mission]).to be_a_new(Mission)
+      end
+
+      it "render template" do
+        expect(response).to render_template("new")
+      end
     end
 
-    it "render template" do
-      mission = build(:mission)
-  
-      get :new
-  
-      expect(response).to render_template("new")
+    context "when a user doesn't login" do
+      it "redirects to login page" do
+        get :new
+
+        expect(response).to redirect_to login_path
+      end
     end
   end
 
-  describe "POSt create" do
+  describe "POST create" do
     context "when mission has a title, start time and finish time" do
       it "create a new mission record" do
         mission = build(:mission)
@@ -113,7 +123,7 @@ RSpec.describe MissionsController do
     end
   end
   
-  describe "PUT update" do
+  describe "PATCH update" do
     context "when mission has required data" do
       it "assign @mission" do
         mission = create(:mission)
