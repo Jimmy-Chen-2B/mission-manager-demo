@@ -5,7 +5,7 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true
   validates :password, presence: true, confirmation: true
 
-  has_many :missions
+  has_many :missions, dependent: :destroy
 
   before_create :encrypt_password
 

@@ -7,11 +7,11 @@ class MissionsController < ApplicationController
   end
 
   def new
-    @mission = Mission.new
+    @mission = current_user.missions.new
   end
 
   def create
-    @mission = Mission.new(mission_params)
+    @mission = current_user.missions.new(mission_params)
     
     if @mission.save
       redirect_to missions_path
@@ -42,10 +42,10 @@ class MissionsController < ApplicationController
   private
 
   def mission_params
-    params.require(:mission).permit(:title, :description, :start_at, :finish_at)
+    params.require(:mission).permit(:title, :description, :started_at, :finished_at)
   end
 
   def set_mission
-    @mission = current_user.mission.find(params[:id])
+    @mission = current_user.missions.find(params[:id])
   end
 end
